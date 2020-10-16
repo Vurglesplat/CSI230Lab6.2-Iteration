@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # file converter.sh
-# brief checking and handling if a file is usable.
+# brief converting the cases of every letter in a file
 # author brandon.boras
 # date 10/16/2020
 
@@ -15,11 +15,13 @@ while getopts ":f:c:" options
 do
 	case "${options}" in
 		f)
-			f=$(OPTARG)
-			# CHECK IF THE FILE IS THERE, HANDLE NO USAGE
+			f=${2}
+			if [[ ! -f "$0" ]]; then
+				usage
+			fi
 			;;
 		c)
-			c=${OPTARG}
+			c=${4}
 			if [[ ${c} == "U" || ${c} == "L" ]]; then
 				echo "${f} - ${c}"
 			else
@@ -32,8 +34,6 @@ do
 	esac
 done
 
-#oncversion logic here
-
 while read line
 do
 	if [ ${c} == "U" ]; then
@@ -41,7 +41,6 @@ do
 	else
 		echo $line | tr [:upper:] [:lower:]
 	fi
-
 done < $f
 
 exit 0
